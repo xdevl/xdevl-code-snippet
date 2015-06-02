@@ -88,7 +88,7 @@ function echo_prettify_options($value)
 	if(empty($value) || $value=='default')
 		echo "<option value=\"default\" selected=selected>default</option>" ;
 	else echo "<option value=\"default\">default</option>" ;
-	echo_files_as_options('google-code-prettify/themes','','.css',$value) ;
+	echo_files_as_options('themes','','.css',$value) ;
 }
 
 function media_buttons()
