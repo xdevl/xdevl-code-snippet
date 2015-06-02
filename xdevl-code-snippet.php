@@ -67,9 +67,12 @@ function echo_files_as_options($dirName, $suffix, $prefix, $value)
 	}
 }
 
-function echo_ace_options($type, $value)
+function echo_ace_options($type, $name, $default)
 {
+	$value=get_option($name,$default) ;
+	echo "<select name=\"$name\" id=\"$name\">" ;
 	echo_files_as_options('ace',$type.'-','.js',$value) ;
+	echo "</select>" ;
 }
 
 function echo_font_size_options($args)
@@ -106,15 +109,15 @@ function media_buttons()
 
 function wp_enqueue_media()
 {
-	wp_register_style('xdevl-code-snippet-style',plugins_url('style.css',__FILE__)) ;
-	wp_enqueue_style('xdevl-code-snippet-style') ;
+	wp_register_style(PLUGIN_NAMESPACE.'_style',plugins_url('style.css',__FILE__)) ;
+	wp_enqueue_style(PLUGIN_NAMESPACE.'_style') ;
 	
-	wp_register_script('ace',plugins_url('ace/ace.js',__FILE__),array( 'jquery' )) ;
+	wp_register_script('ace',plugins_url('ace/ace.js',__FILE__),array('jquery')) ;
 	wp_enqueue_script('ace') ;
 	
 	// TODO: use wp_localize_script to pass default parameters
-	wp_register_script('xdevl-code-snippet-script',plugins_url('script.js',__FILE__),array('jquery','jquery-form','ace')) ;
-	wp_enqueue_script('xdevl-code-snippet-script') ;
+	wp_register_script(PLUGIN_NAMESPACE.'_script',plugins_url('script.js',__FILE__),array('jquery','jquery-form','ace')) ;
+	wp_enqueue_script(PLUGIN_NAMESPACE.'_script') ;
 }
 
 function admin_footer()
@@ -129,19 +132,19 @@ function admin_footer()
 					do_settings_sections(EDITOR_SETTINGS); ?>
 				
 				<div class="field">					
-				<label for="<?php echo EDITOR_SETTINGS_LANGUAGE; ?>">Language:</label><select id="ace-mode" name="<?php echo EDITOR_SETTINGS_LANGUAGE; ?>">
-						<?php echo_ace_options('mode',get_option(EDITOR_SETTINGS_LANGUAGE,EDITOR_SETTINGS_DEFAULT_LANGUAGE)); ?></select>
+					<label for="<?php echo EDITOR_SETTINGS_LANGUAGE; ?>">Language:</label>
+					<?php echo_ace_options('mode',EDITOR_SETTINGS_LANGUAGE,EDITOR_SETTINGS_DEFAULT_LANGUAGE); ?>
 				</div>
 				<div class="field">
-				<label for="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label>
+					<label for="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label>
 					<?php echo_font_size_options(array(EDITOR_SETTINGS_FONT_SIZE,EDITOR_SETTINGS_DEFAULT_FONT_SIZE)); ?>
 				</div>
 				<div class="field">		
-				<label for="<?php echo EDITOR_SETTINGS_THEME; ?>">Theme:</label><select id="ace-theme" name="<?php echo EDITOR_SETTINGS_THEME; ?>"
-						<?php echo_ace_options('theme',get_option(EDITOR_SETTINGS_THEME,EDITOR_SETTINGS_DEFAULT_THEME)); ?></select>
+					<label for="<?php echo EDITOR_SETTINGS_THEME; ?>">Theme:</label>
+					<?php echo_ace_options('theme',EDITOR_SETTINGS_THEME,EDITOR_SETTINGS_DEFAULT_THEME); ?>
 				</div>
 				<div class="field">
-					<a href="#" id="save-code-snippet" class="button-primary"><?php _e( 'Save snippet' ); ?></a>
+					<a href="#" id="save-code-snippet" class="button-primary"><?php _e('Save snippet'); ?></a>
 				</div>
 			</form>
 		</div>

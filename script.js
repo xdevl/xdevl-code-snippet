@@ -107,12 +107,12 @@ jQuery(function($)
 					$("#code-snippet-form").ajaxSubmit({});
 				}) ;
 				
-				$("#ace-theme").change(function() {
-					instance.editor.setTheme("ace/theme/"+$("#ace-theme").val()) ;
+				$("#xdevl_codesnippet_editor_theme").change(function() {
+					instance.editor.setTheme("ace/theme/"+$("#xdevl_codesnippet_editor_theme").val()) ;
 				}) ;
 				
-				$("#ace-mode").change(function() {
-					instance.editor.getSession().setMode("ace/mode/"+$("#ace-mode").val()) ;
+				$("#xdevl_codesnippet_editor_language").change(function() {
+					instance.editor.getSession().setMode("ace/mode/"+$("#xdevl_codesnippet_editor_language").val()) ;
 				}) ;
 				
 				$("#xdevl_codesnippet_editor_fontsize").change(function() {
@@ -128,13 +128,13 @@ jQuery(function($)
 
 			if(this.codeSnippet.isAttached())
 			{
-				$("#ace-mode").val(this.codeSnippet.getLanguage()) ;
-				$("#ace-mode").change() ;
+				$("#xdevl_codesnippet_editor_language").val(this.codeSnippet.getLanguage()) ;
+				$("#xdevl_codesnippet_editor_language").change() ;
 			}
 			else this.codeSnippet.setLanguage($("#ace-mode").val()) ;
 			
-			$("#ace-theme").change() ;
-			$("#ace-font-size").change() ;
+			$("#xdevl_codesnippet_editor_theme").change() ;
+			$("#xdevl_codesnippet_editor_fontsize").change() ;
 			
 			this.editor.setValue(this.codeSnippet.getCode(),1) ;
 		}
