@@ -115,8 +115,8 @@ jQuery(function($)
 					instance.editor.getSession().setMode("ace/mode/"+$("#ace-mode").val()) ;
 				}) ;
 				
-				$("#ace-font-size").change(function() {
-					instance.editor.setFontSize($("#ace-font-size").val()+"em") ;
+				$("#xdevl_codesnippet_editor_fontsize").change(function() {
+					instance.editor.setFontSize($("#xdevl_codesnippet_editor_fontsize").val()+"em") ;
 				}) ;
 			}
 			

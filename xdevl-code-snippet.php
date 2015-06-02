@@ -72,8 +72,11 @@ function echo_ace_options($type, $value)
 	echo_files_as_options('ace',$type.'-','.js',$value) ;
 }
 
-function echo_font_size_options($value)
+function echo_font_size_options($args)
 {
+	$name=$args[0] ;
+	$value=get_option($name,$args[1]) ;
+	echo "<select name=\"$name\" id=\"$name\">" ;
 	for($i=5;$i<=15;++$i)
 	{
 		$font_size=$i/10 ;
@@ -81,14 +84,19 @@ function echo_font_size_options($value)
 			echo "<option value=\"$font_size\" selected=selected>$font_size em</option>" ;
 		else echo "<option value=\"$font_size\">$font_size em</option>" ;
 	}
+	echo "</select>" ;
 }
 
-function echo_prettify_options($value)
+function echo_prettify_options($args)
 {
+	$name=$args[0] ;
+	$value=get_option($name,$args[1]) ;
+	echo "<select name=\"$name\" id=\"$name\">" ;
 	if(empty($value) || $value=='default')
 		echo "<option value=\"default\" selected=selected>default</option>" ;
 	else echo "<option value=\"default\">default</option>" ;
 	echo_files_as_options('themes','','.css',$value) ;
+	echo "</select>" ;
 }
 
 function media_buttons()
@@ -125,8 +133,8 @@ function admin_footer()
 						<?php echo_ace_options('mode',get_option(EDITOR_SETTINGS_LANGUAGE,EDITOR_SETTINGS_DEFAULT_LANGUAGE)); ?></select>
 				</div>
 				<div class="field">
-				<label for="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label><select id="ace-font-size" name="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">
-						<?php echo_font_size_options(get_option(EDITOR_SETTINGS_FONT_SIZE,EDITOR_SETTINGS_DEFAULT_FONT_SIZE)); ?></select>
+				<label for="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label>
+					<?php echo_font_size_options(array(EDITOR_SETTINGS_FONT_SIZE,EDITOR_SETTINGS_DEFAULT_FONT_SIZE)); ?>
 				</div>
 				<div class="field">		
 				<label for="<?php echo EDITOR_SETTINGS_THEME; ?>">Theme:</label><select id="ace-theme" name="<?php echo EDITOR_SETTINGS_THEME; ?>"
@@ -146,28 +154,12 @@ function admin_footer()
 function code_snippet_page()
 {
 	?>
-<div class="wrap">
+<div>
 	<h2>XdevL code snippets setup</h2>
 	<form method="post" action="options.php">
 		<?php settings_fields(THEME_SETTINGS);
-			do_settings_sections(THEME_SETTINGS); ?>
-			
-			<table class="form-table">
-				<tbody>
-					<tr>
-						<th scope="row"><label for="<?php echo THEME_SETTINGS_NAME; ?>">Theme:</label></th>
-						<td><select name="<?php echo THEME_SETTINGS_NAME; ?>">
-							<?php echo_prettify_options(get_option(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME)); ?></select></td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="<?php echo THEME_SETTINGS_FONT_SIZE; ?>">Font size:</label></th>
-						<td><select name="<?php echo THEME_SETTINGS_FONT_SIZE; ?>">
-							<?php echo_font_size_options(get_option(THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?></select></td>
-					</tr>
-				</tbody>
-			</table>
-		
-		<?php submit_button(); ?>
+			do_settings_sections(THEME_SETTINGS);
+			submit_button(); ?>
 	</form>
 </div>
 	<?php
@@ -175,7 +167,7 @@ function code_snippet_page()
 
 function admin_menu()
 {
-	add_theme_page('XdevL code snippets setup', 'XdevL code snippets', 'edit_theme_options', 'xdevl-code-snippet', __NAMESPACE__.'\code_snippet_page') ;
+	add_theme_page('XdevL code snippets setup','XdevL code snippets','edit_theme_options',PLUGIN_NAMESPACE, __NAMESPACE__.'\code_snippet_page') ;
 }
 
 function wp_enqueue_scripts()
@@ -212,6 +204,10 @@ function admin_init()
 {
 	register_setting(THEME_SETTINGS,THEME_SETTINGS_NAME) ;
 	register_setting(THEME_SETTINGS,THEME_SETTINGS_FONT_SIZE) ;
+	add_settings_section(THEME_SETTINGS,null,null,THEME_SETTINGS) ;
+	add_settings_field(THEME_SETTINGS_NAME,'Theme:', __NAMESPACE__.'\echo_prettify_options',THEME_SETTINGS,THEME_SETTINGS,array(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME)) ;
+	add_settings_field(THEME_SETTINGS_FONT_SIZE,'Font size:', __NAMESPACE__.'\echo_font_size_options',THEME_SETTINGS,THEME_SETTINGS,array(THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)) ;
+	
 	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_LANGUAGE) ;
 	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_FONT_SIZE) ;
 	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_THEME) ;
