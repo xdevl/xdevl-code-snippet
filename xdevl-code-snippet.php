@@ -28,25 +28,24 @@ namespace xdevl\codesnippet
 {
 
 defined( 'ABSPATH' ) or die('No script kiddies please!') ;
-class Constant
-{
-	// Theme settings
-	const THEME_SETTINGS='xdevl:codesnippet:theme' ;
-	const THEME_SETTINGS_NAME=self::THEME_SETTINGS.':name' ;
-	const THEME_SETTINGS_DEFAULT_NAME='default' ;
-	const THEME_SETTINGS_FONT_SIZE=self::THEME_SETTINGS.':font_size' ;
-	const THEME_SETTINGS_DEFAULT_FONT_SIZE='1' ;
 
-	// Editor settings
-	const EDITOR_SETTINGS='xdevl:codesnippet:editor' ;
-	const EDITOR_SETTINGS_LANGUAGE=self::EDITOR_SETTINGS.':language' ;
-	const EDITOR_SETTINGS_DEFAULT_LANGUAGE='c_cpp' ;
-	const EDITOR_SETTINGS_THEME=self::EDITOR_SETTINGS.':theme' ;
-	const EDITOR_SETTINGS_DEFAULT_THEME='github' ;
-	const EDITOR_SETTINGS_FONT_SIZE=self::EDITOR_SETTINGS.':font_size' ;
-	const EDITOR_SETTINGS_DEFAULT_FONT_SIZE='1rem' ;
-}
+define(__NAMESPACE__.'\PLUGIN_NAMESPACE','xdevl_codesnippet') ;
 
+// Theme settings
+define(__NAMESPACE__.'\THEME_SETTINGS',PLUGIN_NAMESPACE.'_theme') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_NAME',THEME_SETTINGS.'_name') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_NAME','default') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_FONT_SIZE',THEME_SETTINGS.'_fontsize') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_FONT_SIZE','1') ; // 1em
+
+// Editor settings
+define(__NAMESPACE__.'\EDITOR_SETTINGS',PLUGIN_NAMESPACE.'_editor') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_LANGUAGE',EDITOR_SETTINGS.'_language') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_DEFAULT_LANGUAGE','c_cpp') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_THEME',EDITOR_SETTINGS.'_theme') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_DEFAULT_THEME','github') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_FONT_SIZE',EDITOR_SETTINGS.'_fontsize') ;
+define(__NAMESPACE__.'\EDITOR_SETTINGS_DEFAULT_FONT_SIZE','1') ; //1em
 
 function echo_files_as_options($dirName, $suffix, $prefix, $value)
 {
@@ -118,20 +117,20 @@ function admin_footer()
 		<div class="header">
 			<h1>Code snippet</h1>
 			<form id="code-snippet-form" method="post" action="options.php">
-				<?php settings_fields(Constant::EDITOR_SETTINGS);
-					do_settings_sections(Constant::EDITOR_SETTINGS); ?>
+				<?php settings_fields(EDITOR_SETTINGS);
+					do_settings_sections(EDITOR_SETTINGS); ?>
 				
 				<div class="field">					
-				<label for="<?php echo Constant::EDITOR_SETTINGS_LANGUAGE; ?>">Language:</label><select id="ace-mode" name="<?php echo Constant::EDITOR_SETTINGS_LANGUAGE; ?>">
-						<?php echo_ace_options('mode',get_option(Constant::EDITOR_SETTINGS_LANGUAGE,Constant::EDITOR_SETTINGS_DEFAULT_LANGUAGE)); ?></select>
+				<label for="<?php echo EDITOR_SETTINGS_LANGUAGE; ?>">Language:</label><select id="ace-mode" name="<?php echo EDITOR_SETTINGS_LANGUAGE; ?>">
+						<?php echo_ace_options('mode',get_option(EDITOR_SETTINGS_LANGUAGE,EDITOR_SETTINGS_DEFAULT_LANGUAGE)); ?></select>
 				</div>
 				<div class="field">
-				<label for="<?php echo Constant::EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label><select id="ace-font-size" name="<?php echo Constant::EDITOR_SETTINGS_FONT_SIZE; ?>">
-						<?php echo_font_size_options(get_option(Constant::EDITOR_SETTINGS_FONT_SIZE,Constant::EDITOR_SETTINGS_DEFAULT_FONT_SIZE)); ?></select>
+				<label for="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">Font size:</label><select id="ace-font-size" name="<?php echo EDITOR_SETTINGS_FONT_SIZE; ?>">
+						<?php echo_font_size_options(get_option(EDITOR_SETTINGS_FONT_SIZE,EDITOR_SETTINGS_DEFAULT_FONT_SIZE)); ?></select>
 				</div>
 				<div class="field">		
-				<label for="<?php echo Constant::EDITOR_SETTINGS_THEME; ?>">Theme:</label><select id="ace-theme" name="<?php echo Constant::EDITOR_SETTINGS_THEME; ?>"
-						<?php echo_ace_options('theme',get_option(Constant::EDITOR_SETTINGS_THEME,Constant::EDITOR_SETTINGS_DEFAULT_THEME)); ?></select>
+				<label for="<?php echo EDITOR_SETTINGS_THEME; ?>">Theme:</label><select id="ace-theme" name="<?php echo EDITOR_SETTINGS_THEME; ?>"
+						<?php echo_ace_options('theme',get_option(EDITOR_SETTINGS_THEME,EDITOR_SETTINGS_DEFAULT_THEME)); ?></select>
 				</div>
 				<div class="field">
 					<a href="#" id="save-code-snippet" class="button-primary"><?php _e( 'Save snippet' ); ?></a>
@@ -150,20 +149,20 @@ function code_snippet_page()
 <div class="wrap">
 	<h2>XdevL code snippets setup</h2>
 	<form method="post" action="options.php">
-		<?php settings_fields(Constant::THEME_SETTINGS);
-			do_settings_sections(Constant::THEME_SETTINGS); ?>
+		<?php settings_fields(THEME_SETTINGS);
+			do_settings_sections(THEME_SETTINGS); ?>
 			
 			<table class="form-table">
 				<tbody>
 					<tr>
-						<th scope="row"><label for="<?php echo Constant::THEME_SETTINGS_NAME; ?>">Theme:</label></th>
-						<td><select name="<?php echo Constant::THEME_SETTINGS_NAME; ?>">
-							<?php echo_prettify_options(get_option(Constant::THEME_SETTINGS_NAME,Constant::THEME_SETTINGS_DEFAULT_NAME)); ?></select></td>
+						<th scope="row"><label for="<?php echo THEME_SETTINGS_NAME; ?>">Theme:</label></th>
+						<td><select name="<?php echo THEME_SETTINGS_NAME; ?>">
+							<?php echo_prettify_options(get_option(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME)); ?></select></td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="<?php echo Constant::THEME_SETTINGS_FONT_SIZE; ?>">Font size:</label></th>
-						<td><select name="<?php echo Constant::THEME_SETTINGS_FONT_SIZE; ?>">
-							<?php echo_font_size_options(get_option(Constant::THEME_SETTINGS_FONT_SIZE,Constant::THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?></select></td>
+						<th scope="row"><label for="<?php echo THEME_SETTINGS_FONT_SIZE; ?>">Font size:</label></th>
+						<td><select name="<?php echo THEME_SETTINGS_FONT_SIZE; ?>">
+							<?php echo_font_size_options(get_option(THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?></select></td>
 					</tr>
 				</tbody>
 			</table>
@@ -181,7 +180,7 @@ function admin_menu()
 
 function wp_enqueue_scripts()
 {
-	$theme=get_option(Constant::THEME_SETTINGS_NAME,Constant::THEME_SETTINGS_DEFAULT_NAME) ;
+	$theme=get_option(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME) ;
 	if(empty($theme) || $theme=="default")
 		$themeFile='google-code-prettify/prettify.css' ;
 	else $themeFile="themes/$theme.css" ;
@@ -197,7 +196,7 @@ function wp_head()
 {
 	?>
 	<style>pre.prettyprint {font-size: <?php echo esc_attr(get_option(
-		Constant::THEME_SETTINGS_FONT_SIZE,Constant::THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?>em !important;} </style>
+		THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?>em !important;} </style>
 	
 	<?php
 }
@@ -211,11 +210,11 @@ function wp_footer()
 
 function admin_init()
 {
-	register_setting(Constant::THEME_SETTINGS,Constant::THEME_SETTINGS_NAME) ;
-	register_setting(Constant::THEME_SETTINGS,Constant::THEME_SETTINGS_FONT_SIZE) ;
-	register_setting(Constant::EDITOR_SETTINGS,Constant::EDITOR_SETTINGS_LANGUAGE) ;
-	register_setting(Constant::EDITOR_SETTINGS,Constant::EDITOR_SETTINGS_FONT_SIZE) ;
-	register_setting(Constant::EDITOR_SETTINGS,Constant::EDITOR_SETTINGS_THEME) ;
+	register_setting(THEME_SETTINGS,THEME_SETTINGS_NAME) ;
+	register_setting(THEME_SETTINGS,THEME_SETTINGS_FONT_SIZE) ;
+	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_LANGUAGE) ;
+	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_FONT_SIZE) ;
+	register_setting(EDITOR_SETTINGS,EDITOR_SETTINGS_THEME) ;
 }
 
 // admin setup
