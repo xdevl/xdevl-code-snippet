@@ -1,21 +1,22 @@
 var xdevl=xdevl || {} ;
+xdevl.codesnippet=xdevl.codesnippet || {} ;
 
 jQuery(function($)
-{		
-	xdevl.CodeSnippet=function(node)
+{
+	xdevl.codesnippet.DEFAULT_LANGUAGE="text" ;
+	xdevl.codesnippet.LANGUAGE_PREFIX="language-" ;
+		
+	xdevl.codesnippet.isCodeSnippet=function(node)
 	{
-		xdevl.CodeSnippet.DEFAULT_LANGUAGE="text" ;
-		xdevl.CodeSnippet.LANGUAGE_PREFIX="language-" ;
-		
-		xdevl.CodeSnippet.isCodeSnippet=function(node)
-		{
-			return node.tagName.toLowerCase()=="code" && node.parentNode!=null
-					&& node.parentNode.tagName.toLowerCase()=="pre" ;
-		} ;
-		
+		return node.tagName.toLowerCase()=="code" && node.parentNode!=null
+				&& node.parentNode.tagName.toLowerCase()=="pre" ;
+	} ;
+	
+	xdevl.codesnippet.Snippet=function(node)
+	{
 		this.init=function(node)
 		{
-			this.node=(node && xdevl.CodeSnippet.isCodeSnippet(node))?node:document.createElement("pre").appendChild(document.createElement("code")) ;
+			this.node=(node && xdevl.codesnippet.isCodeSnippet(node))?node:document.createElement("pre").appendChild(document.createElement("code")) ;
 		} ;
 		
 		this.setCode=function(code)
@@ -32,15 +33,15 @@ jQuery(function($)
 		
 		this.setLanguage=function(language)
 		{
-			this.node.className=xdevl.CodeSnippet.LANGUAGE_PREFIX+(language) ;
+			this.node.className=xdevl.codesnippet.LANGUAGE_PREFIX+(language) ;
 			this.node.parentNode.className="prettyprint" ;
 		} ;
 		
 		this.getLanguage=function()
 		{
-			if(!this.node.className || this.node.className.indexOf(xdevl.CodeSnippet.LANGUAGE_PREFIX)!=0)
-				return xdevl.CodeSnippet.DEFAULT_LANGUAGE ;
-			else return this.node.className.substr(xdevl.CodeSnippet.LANGUAGE_PREFIX.length) ;
+			if(!this.node.className || this.node.className.indexOf(xdevl.codesnippet.LANGUAGE_PREFIX)!=0)
+				return xdevl.codesnippet.DEFAULT_LANGUAGE ;
+			else return this.node.className.substr(xdevl.codesnippet.LANGUAGE_PREFIX.length) ;
 		} ;
 		
 		this.isAttached=function()
@@ -68,7 +69,7 @@ jQuery(function($)
 		this.init(node) ;
 	} ;
 	
-	xdevl.CodeSnippetDialog=wp.media.view.Modal.extend(
+	xdevl.codesnippet.Dialog=wp.media.view.Modal.extend(
 	{
 		controller: { trigger: function() {} },
 		
@@ -105,7 +106,6 @@ jQuery(function($)
 					
 					instance.close() ;
 					$(this).closest("form").ajaxSubmit({}) ;
-					//$("#code-snippet-form").ajaxSubmit({});
 				}) ;
 				
 				
@@ -123,10 +123,10 @@ jQuery(function($)
 			}
 			
 			var node=tinymce.activeEditor.selection.getNode() ;
-			while(node!=null && !node.tagName.toLowerCase()=="body" && !xdevl.CodeSnippet.isCodeSnippet(node))
+			while(node!=null && !node.tagName.toLowerCase()=="body" && !xdevl.codesnippet.isCodeSnippet(node))
 				node=node.parentNode ;
 			
-			this.codeSnippet=new xdevl.CodeSnippet(node) ;
+			this.codeSnippet=new xdevl.codesnippet.Snippet(node) ;
 
 			if(this.codeSnippet.isAttached())
 			{
@@ -142,13 +142,13 @@ jQuery(function($)
 		}
 	}) ;
 	
-	xdevl.codeSnippetDialog=new xdevl.CodeSnippetDialog() ;
+	xdevl.codesnippet.dialog=new xdevl.codesnippet.Dialog() ;
 	
 	$(document).ready
 	(
 		function()
 		{
-			$("#"+xdevl_codesnippet.BUTTON_ID).click(function(){xdevl.codeSnippetDialog.open();}) ;
+			$("#"+xdevl_codesnippet.BUTTON_ID).click(function(){xdevl.codesnippet.dialog.open();}) ;
 		}
 	) ;
 }) ;
