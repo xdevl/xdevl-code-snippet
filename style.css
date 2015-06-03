@@ -9,7 +9,7 @@
 	margin: 0.1em 0.4em 0.1em 0;
 }
 
-#xdevl-code-dialog
+#xdevl_codesnippet
 {
 	position: absolute ;
 	top: 1rem ;
@@ -18,37 +18,37 @@
 	right:1rem ;
 }
 
-#xdevl-code-dialog .wrapper
+#xdevl_codesnippet .wrapper
 {
 	width: 100% ;
 	height: 100% ;
 	display: table ;
 }
 
-#xdevl-code-dialog .header
+#xdevl_codesnippet .header
 {
 	display: table-row ;
 }
 
-#xdevl-code-dialog .field
+#xdevl_codesnippet .field
 {
 	margin: 0.5rem ;
 	display: inline-block ;
 }
 
-#xdevl-code-dialog label
+#xdevl_codesnippet label
 {
 	font-weight: bold ;
 	margin-right: 0.2rem ;
 }
 
-.editor
+#xdevl_codesnippet .editor
 {
 	display: table-row ;
 	height: 100% ;
 }
 
-#ace-editor
+#xdevl_codesnippet_editor
 {
 	width: 100% ;
 	height: 100% ;

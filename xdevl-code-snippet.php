@@ -47,6 +47,12 @@ define(__NAMESPACE__.'\EDITOR_SETTINGS_DEFAULT_THEME','github') ;
 define(__NAMESPACE__.'\EDITOR_SETTINGS_FONT_SIZE',EDITOR_SETTINGS.'_fontsize') ;
 define(__NAMESPACE__.'\EDITOR_SETTINGS_DEFAULT_FONT_SIZE','1') ; //1em
 
+// IDs
+define(__NAMESPACE__.'\BUTTON_ID',PLUGIN_NAMESPACE.'_open') ;
+define(__NAMESPACE__.'\EDITOR_ID',PLUGIN_NAMESPACE.'_editor') ;
+define(__NAMESPACE__.'\EDITOR_BUTTON_ID',PLUGIN_NAMESPACE.'_save') ;
+define(__NAMESPACE__.'\TEMPLATE_ID',PLUGIN_NAMESPACE) ;
+
 function echo_files_as_options($dirName, $suffix, $prefix, $value)
 {
 	if($directory=opendir(plugin_dir_path(__FILE__).$dirName))
@@ -104,7 +110,18 @@ function echo_prettify_options($args)
 
 function media_buttons()
 {
-	echo '<a href="#" id="xdevl-code-snippet" class="button"><span class="xdevl-code-button"></span>Code</a>' ;
+	echo '<a href="#" id="'.BUTTON_ID.'" class="button"><span class="xdevl-code-button"></span>Code</a>' ;
+}
+
+function build_script_data()
+{
+	return array(	'EDITOR_SETTINGS_LANGUAGE'=>EDITOR_SETTINGS_LANGUAGE,
+					'EDITOR_SETTINGS_THEME'=>EDITOR_SETTINGS_THEME,
+					'EDITOR_SETTINGS_FONT_SIZE'=>EDITOR_SETTINGS_FONT_SIZE,
+					'BUTTON_ID'=>BUTTON_ID,
+					'EDITOR_ID'=>EDITOR_ID,
+					'EDITOR_BUTTON_ID'=>EDITOR_BUTTON_ID,
+					'TEMPLATE_ID'=>TEMPLATE_ID) ;
 }
 
 function wp_enqueue_media()
@@ -115,19 +132,19 @@ function wp_enqueue_media()
 	wp_register_script('ace',plugins_url('ace/ace.js',__FILE__),array('jquery')) ;
 	wp_enqueue_script('ace') ;
 	
-	// TODO: use wp_localize_script to pass default parameters
 	wp_register_script(PLUGIN_NAMESPACE.'_script',plugins_url('script.js',__FILE__),array('jquery','jquery-form','ace')) ;
+	wp_localize_script(PLUGIN_NAMESPACE.'_script',PLUGIN_NAMESPACE,build_script_data()) ;
 	wp_enqueue_script(PLUGIN_NAMESPACE.'_script') ;
 }
 
 function admin_footer()
 {
 	?>
-<script type="text/template" id="tmpl-xdevl-code-snippet">
+<script type="text/template" id="tmpl-<?php echo TEMPLATE_ID; ?>">
 	<div class="wrapper">
 		<div class="header">
 			<h1>Code snippet</h1>
-			<form id="code-snippet-form" method="post" action="options.php">
+			<form method="post" action="options.php">
 				<?php settings_fields(EDITOR_SETTINGS);
 					do_settings_sections(EDITOR_SETTINGS); ?>
 				
@@ -144,11 +161,11 @@ function admin_footer()
 					<?php echo_ace_options('theme',EDITOR_SETTINGS_THEME,EDITOR_SETTINGS_DEFAULT_THEME); ?>
 				</div>
 				<div class="field">
-					<a href="#" id="save-code-snippet" class="button-primary"><?php _e('Save snippet'); ?></a>
+					<a href="#" id="<?php echo EDITOR_BUTTON_ID; ?>" class="button-primary"><?php _e('Save snippet'); ?></a>
 				</div>
 			</form>
 		</div>
-		<div class="editor"><div id="ace-editor"></div></div>
+		<div class="editor"><div id="<?php echo EDITOR_ID; ?>"></div></div>
 	</div>
 </script>
 	<?php
