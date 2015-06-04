@@ -34,7 +34,7 @@ define(__NAMESPACE__.'\PLUGIN_NAMESPACE','xdevl_codesnippet') ;
 // Theme settings
 define(__NAMESPACE__.'\THEME_SETTINGS',PLUGIN_NAMESPACE.'_theme') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_NAME',THEME_SETTINGS.'_name') ;
-define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_NAME','default') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_NAME','prettify') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_FONT_SIZE',THEME_SETTINGS.'_fontsize') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_FONT_SIZE','1') ; // 1em
 
@@ -101,9 +101,6 @@ function echo_prettify_options($args)
 	$name=$args[0] ;
 	$value=get_option($name,$args[1]) ;
 	echo "<select name=\"$name\" id=\"$name\">" ;
-	if(empty($value) || $value=='default')
-		echo "<option value=\"default\" selected=selected>default</option>" ;
-	else echo "<option value=\"default\">default</option>" ;
 	echo_files_as_options('themes','','.css',$value) ;
 	echo "</select>" ;
 }
@@ -192,10 +189,7 @@ function admin_menu()
 
 function wp_enqueue_scripts()
 {
-	$theme=get_option(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME) ;
-	if(empty($theme) || $theme=="default")
-		$themeFile='google-code-prettify/prettify.css' ;
-	else $themeFile="themes/$theme.css" ;
+	$themeFile='themes/'.get_option(THEME_SETTINGS_NAME,THEME_SETTINGS_DEFAULT_NAME).'.css' ;
 	
 	wp_register_style('prettify-css',plugins_url($themeFile,__FILE__)) ;
 	wp_enqueue_style('prettify-css') ;
