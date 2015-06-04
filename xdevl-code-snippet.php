@@ -213,12 +213,14 @@ function wp_head()
 		font-size: <?php echo esc_attr(get_option(THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?>em !important;
 		font-family: 'Source Code Pro', Monaco, Consolas, Menlo, Inconsolata, monospace;
 		padding: 0.8em ;
+		white-space: pre ;
 	}
 	pre.prettyprint code
 	{
 		font-size: inherit ;
 		font-family: inherit ;
 		padding: 0 ;
+		white-space: inherit ;
 	}
 	
 </style>
