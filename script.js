@@ -105,7 +105,6 @@ jQuery(function($)
 						wp.media.editor.insert(instance.codeSnippet.getHTML()) ;
 					
 					instance.close() ;
-					$(this).closest("form").ajaxSubmit({}) ;
 				}) ;
 				
 				
@@ -139,7 +138,14 @@ jQuery(function($)
 			$("#"+xdevl_codesnippet.EDITOR_SETTINGS_FONT_SIZE).change() ;
 			
 			this.editor.setValue(this.codeSnippet.getCode(),1) ;
+		},
+		
+		close: function()
+		{
+			wp.media.view.Modal.prototype.close.apply(this,arguments) ;
+			$("#"+xdevl_codesnippet.EDITOR_BUTTON_ID).closest("form").ajaxSubmit({}) ;
 		}
+		
 	}) ;
 	
 	xdevl.codesnippet.dialog=new xdevl.codesnippet.Dialog() ;
