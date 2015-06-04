@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'Source Code Pro' ;
+	src:	url('fonts/SourceCodePro-Medium.woff2') format('woff2'),
+			url('fonts/SourceCodePro-Medium.woff') format('woff'),
+			url('fonts/SourceCodePro-Medium.ttf') format('truetype') ;
+}
+
 .xdevl-code-button
 {
 	display: inline-block ;
@@ -52,4 +59,5 @@
 {
 	width: 100% ;
 	height: 100% ;
+	font-family: 'Source Code Pro', Monaco, Consolas, Menlo, Inconsolata, monospace ;
 }

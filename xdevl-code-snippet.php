@@ -207,9 +207,27 @@ function wp_enqueue_scripts()
 function wp_head()
 {
 	?>
-	<style>pre.prettyprint {font-size: <?php echo esc_attr(get_option(
-		THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?>em !important;} </style>
+<style>
+	@font-face {
+		font-family: 'Source Code Pro' ;
+		src:	url('<?php echo plugins_url('fonts/SourceCodePro-Medium.woff2',__FILE__); ?>') format('woff2'),
+				url('<?php echo plugins_url('fonts/SourceCodePro-Medium.woff',__FILE__); ?>') format('woff'),
+				url('<?php echo plugins_url('fonts/SourceCodePro-Medium.ttf',__FILE__); ?>') format('truetype') ;
+	}
+	pre.prettyprint
+	{
+		font-size: <?php echo esc_attr(get_option(THEME_SETTINGS_FONT_SIZE,THEME_SETTINGS_DEFAULT_FONT_SIZE)); ?>em !important;
+		font-family: 'Source Code Pro', Monaco, Consolas, Menlo, Inconsolata, monospace;
+		padding: 0.8em ;
+	}
+	pre.prettyprint code
+	{
+		font-size: inherit ;
+		font-family: inherit ;
+		padding: 0 ;
+	}
 	
+</style>
 	<?php
 }
 
