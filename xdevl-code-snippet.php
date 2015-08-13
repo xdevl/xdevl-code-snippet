@@ -214,6 +214,7 @@ function wp_head()
 		font-family: 'Source Code Pro', Monaco, Consolas, Menlo, Inconsolata, monospace;
 		padding: 0.8em ;
 		white-space: pre ;
+		word-wrap: normal ;
 	}
 	pre.prettyprint code
 	{
