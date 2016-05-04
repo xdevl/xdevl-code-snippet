@@ -34,7 +34,7 @@ define(__NAMESPACE__.'\PLUGIN_NAMESPACE','xdevl_codesnippet') ;
 // Theme settings
 define(__NAMESPACE__.'\THEME_SETTINGS',PLUGIN_NAMESPACE.'_theme') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_NAME',THEME_SETTINGS.'_name') ;
-define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_NAME','prettify') ;
+define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_NAME','github-v2') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_FONT_SIZE',THEME_SETTINGS.'_fontsize') ;
 define(__NAMESPACE__.'\THEME_SETTINGS_DEFAULT_FONT_SIZE','1') ; // 1em
 
