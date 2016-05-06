@@ -40,7 +40,7 @@ def download(url):
 
 # Add a directory into a zip file with the given name
 def zip_dir(z, name, directory):
-	exclude=[".git",TMP_DIRECTORY,SCRIPT_NAME,PACKAGE_NAME]
+	exclude=[".git",".gitignore",TMP_DIRECTORY,SCRIPT_NAME,PACKAGE_NAME]
 	for entry in os.listdir(directory):
 		if entry not in exclude:
 			real_path=os.path.join(directory,entry)
