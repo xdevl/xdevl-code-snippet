@@ -45,7 +45,7 @@ def zip_dir(z, name, directory):
 		if entry not in exclude:
 			real_path=os.path.join(directory,entry)
 			archive_path=os.path.join(name,entry)
-			if os.path.isdir(entry):
+			if os.path.isdir(real_path):
 				zip_dir(z,archive_path,real_path)
 			else:
 				z.write(real_path,archive_path)
