@@ -171,8 +171,8 @@ function admin_footer()
 function code_snippet_page()
 {
 	?>
-<div>
-	<h2>XdevL code snippets setup</h2>
+<div class="wrap">
+	<h1>XdevL code snippets setup</h1>
 	<form method="post" action="options.php">
 		<?php settings_fields(THEME_SETTINGS);
 			do_settings_sections(THEME_SETTINGS);
